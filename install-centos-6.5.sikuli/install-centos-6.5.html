@@ -1,0 +1,231 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }
+
+         .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>install-centos-6.5.sikuli</h2> <a href="install-centos-6.5.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+vm_name = <span class="str">"centos-base"</span>
+<span class="cmt"># root password
+</span>password = <span class="str">"password"</span>
+
+user = <span class="str">"centos"</span>
+user_password = password
+
+<span class="cmt"># Virtualbox workarounds
+</span><span class="cmt">#click("1396821812290.png")
+</span>
+<span class="kw">def</span> go_faster():
+    <span class="cmt"># Go faster button (skip optional tests and timeouts)
+</span>    <span class="kw">try</span>:
+        <span class="skw">wait</span>(<img src="1396997927763.png" />, <span class="dig">30</span>)
+        App.focus(vm_name)
+        <span class="skw">type</span>(Key.ENTER)
+    <span class="kw">except</span> FindFailed:
+        <span class="kw">pass</span>
+
+<span class="kw">def</span> skip_media_check():
+    <span class="skw">wait</span>(<img src="1396998092666.png" />, <span class="dig">120</span>)
+    App.focus(vm_name)
+    <span class="skw">type</span>(Key.RIGHT)
+    <span class="skw">type</span>(Key.ENTER)
+
+<span class="kw">def</span> skip_splash_screen():
+    <span class="skw">wait</span>(<img src="1396998376881.png" />, <span class="dig">60</span>)
+    App.focus(vm_name)
+    <span class="skw">type</span>(Key.ENTER)
+
+<span class="kw">def</span> select_language():
+    <span class="skw">wait</span>(<img src="1396998487865.png" />, <span class="dig">10</span>)
+    App.focus(vm_name)
+    <span class="skw">type</span>(Key.ENTER)
+    <span class="skw">wait</span>(<img src="1396998531777.png" />, <span class="dig">10</span>)
+    <span class="skw">type</span>(Key.ENTER)
+
+<span class="kw">def</span> configure_partitioning():
+    <span class="skw">wait</span>(<img src="1396998562832.png" />, <span class="dig">10</span>)
+    App.focus(vm_name)
+    <span class="skw">type</span>(Key.ENTER)
+    <span class="skw">sleep</span>(<span class="dig">5</span>)
+    <span class="kw">if</span> exists(<img src="1396998627162.png" />):
+        App.focus(vm_name)
+        <span class="skw">type</span>(Key.TAB, KeyModifier.SHIFT)
+        <span class="skw">type</span>(Key.ENTER)
+
+<span class="kw">def</span> configure_hostname():
+    <span class="skw">wait</span>(<img src="1396998722017.png" />, <span class="dig">10</span>)
+    App.focus(vm_name)
+    <span class="skw">type</span>(vm_name)
+    <span class="skw">type</span>(Key.ENTER)
+
+<span class="kw">def</span> skip_timezone():
+    <span class="cmt"># Timezone dropdown doesn't want to play ball, just skip it for now...
+</span>    <span class="skw">wait</span>(<img src="1396998833202.png" />, <span class="dig">10</span>)
+    <span class="skw">type</span>(Key.ENTER)
+
+<span class="kw">def</span> set_password():
+    <span class="skw">wait</span>(<img src="1396999434941.png" />, <span class="dig">10</span>)
+    App.focus(vm_name)
+    <span class="skw">type</span>(password)
+    <span class="skw">type</span>(Key.TAB)
+    <span class="skw">type</span>(password)
+    <span class="skw">type</span>(Key.ENTER)
+    <span class="kw">if</span> exists(<img src="1396999517670.png" />):
+        <span class="skw">type</span>(Key.TAB)
+        <span class="skw">type</span>(Key.ENTER)
+
+<span class="kw">def</span> configure_partitioning_pt2():
+    <span class="skw">wait</span>(<img src="1396999589957.png" />, <span class="dig">10</span>)
+    App.focus(vm_name)
+    <span class="skw">type</span>(Key.TAB)
+    <span class="skw">sleep</span>(<span class="dig">0.2</span>)
+    <span class="skw">type</span>(Key.UP)
+    <span class="skw">type</span>(Key.TAB, KeyModifier.SHIFT)
+    <span class="skw">type</span>(Key.ENTER)
+    <span class="skw">wait</span>(<img src="1396999746165.png" />, <span class="dig">10</span>)
+    <span class="skw">type</span>(Key.TAB)
+    <span class="skw">type</span>(Key.ENTER)
+
+<span class="kw">def</span> configure_packages():
+    <span class="cmt"># Desktop setup is fine
+</span>    <span class="skw">wait</span>(<img src="1396999831597.png" />, <span class="dig">10</span>)
+    App.focus(vm_name)
+    <span class="skw">type</span>(Key.ENTER)
+
+<span class="kw">def</span> finish_and_reboot():
+    <span class="skw">wait</span>(None, <span class="dig">180</span>)
+    App.focus(vm_name)
+    <span class="skw">type</span>(Key.ENTER)
+
+<span class="kw">def</span> first_boot():
+    <span class="skw">wait</span>(<img src="1397000827035.png" />, <span class="dig">300</span>)
+    App.focus(vm_name)
+    <span class="skw">type</span>(Key.ENTER)
+    <span class="skw">sleep</span>(<span class="dig">0.5</span>)
+    <span class="skw">type</span>(Key.ENTER)
+    <span class="skw">sleep</span>(<span class="dig">0.5</span>)
+    <span class="cmt"># User setup screen
+</span>    <span class="skw">type</span>(user)
+    <span class="skw">type</span>(Key.TAB)
+    <span class="skw">type</span>(user)
+    <span class="skw">type</span>(Key.TAB)
+    <span class="skw">type</span>(user_password)
+    <span class="skw">type</span>(Key.TAB)
+    <span class="skw">type</span>(user_password)
+    <span class="skw">type</span>(Key.TAB)
+    <span class="skw">type</span>(Key.TAB)
+    <span class="skw">type</span>(Key.TAB)
+    <span class="skw">type</span>(Key.TAB)
+    <span class="skw">type</span>(Key.ENTER)
+    <span class="kw">if</span> exists(<img src="1397001083371.png" />):
+        <span class="skw">type</span>(Key.TAB)
+        <span class="skw">type</span>(Key.ENTER)
+    <span class="kw">if</span> exists(<img src="1397001222199.png" />):
+        <span class="skw">type</span>(Key.TAB)
+        <span class="skw">type</span>(Key.ENTER)
+    <span class="cmt"># Time setup screen
+</span>    <span class="skw">type</span>(Key.TAB)
+    <span class="skw">type</span>(Key.TAB)
+    <span class="skw">type</span>(Key.ENTER)
+    <span class="skw">sleep</span>(<span class="dig">0.1</span>)
+    <span class="skw">type</span>(Key.TAB, KeyModifier.SHIFT)
+    <span class="skw">type</span>(Key.TAB, KeyModifier.SHIFT)
+    <span class="skw">type</span>(Key.ENTER)
+    waitVanish(<img src="1397001284636.png" />, <span class="dig">30</span>)
+    <span class="skw">sleep</span>(<span class="dig">2</span>)
+    <span class="cmt"># Kdump setup screen
+</span>    <span class="kw">if</span> exists(<img src="1397001322839.png" />):
+        <span class="skw">type</span>(Key.ENTER)
+    <span class="skw">type</span>(Key.ENTER)
+
+<span class="kw">def</span> login():
+    <span class="skw">wait</span>(<img src="1397001596825.png" />, <span class="dig">30</span>)
+    App.focus(vm_name)
+    <span class="skw">type</span>(Key.ENTER)
+    <span class="skw">sleep</span>(<span class="dig">2</span>)
+    <span class="skw">type</span>(user_password)
+    <span class="skw">type</span>(Key.ENTER)
+
+go_faster()
+skip_media_check()
+skip_splash_screen()
+select_language()
+configure_partitioning()
+configure_hostname()
+skip_timezone()
+set_password()
+configure_partitioning_pt2()
+configure_packages()
+waitVanish(<img src="1396999877729.png" />, <span class="dig">1800</span>)
+
+finish_and_reboot()
+first_boot()
+login()
+</pre>
+</body>
+</html>

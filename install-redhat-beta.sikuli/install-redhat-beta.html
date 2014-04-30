@@ -1,0 +1,166 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }
+
+         .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>install-redhat-beta.sikuli\install-redhat-beta.sikuli</h2> <a href="install-redhat-beta.sikuli\install-redhat-beta.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+vm_name = <span class="str">"rh-test"</span>
+password = <span class="str">"password"</span>
+
+<span class="cmt"># Virtualbox workarounds
+</span><span class="cmt">#click("1396821812290.png")
+</span>
+<span class="kw">def</span> go_faster():
+    <span class="cmt"># Go faster button (skip optional tests and timeouts)
+</span>    <span class="kw">try</span>:
+        <span class="skw">wait</span>(<img src="1396821691985.png" />, <span class="dig">30</span>)
+        App.focus(vm_name)
+        <span class="skw">type</span>(Key.ENTER)
+    <span class="kw">except</span> FindFailed:
+        <span class="kw">pass</span>
+    <span class="kw">else</span>:
+        <span class="kw">try</span>:
+
+            <span class="skw">wait</span>(<img src="1396821778657.png" />, <span class="dig">30</span>)
+            App.focus(vm_name)
+            <span class="skw">type</span>(Key.ESC)
+        <span class="kw">except</span> FindFailed:
+            <span class="kw">pass</span>
+
+<span class="kw">def</span> select_language():
+    <span class="skw">wait</span>(<img src="1396821874647.png" />, <span class="dig">120</span>)
+    App.focus(vm_name)
+    <span class="skw">type</span>(<span class="str">"c"</span>, KeyModifier.ALT)
+    <span class="skw">wait</span>(<img src="1396822487931.png" />, <span class="dig">5</span>)
+    <span class="skw">type</span>(Key.RIGHT)
+    <span class="skw">type</span>(Key.ENTER)
+
+<span class="kw">def</span> configure_partitioning():
+    <span class="skw">wait</span>(<img src="1396823483019.png" />, <span class="dig">20</span>)
+    App.focus(vm_name)
+    <span class="skw">type</span>(Key.TAB, KeyModifier.SHIFT)
+    <span class="skw">type</span>(Key.TAB, KeyModifier.SHIFT)
+    <span class="skw">sleep</span>(<span class="dig">5</span>)
+    <span class="skw">type</span>(Key.ENTER)
+    <span class="skw">sleep</span>(<span class="dig">0.2</span>)
+    <span class="skw">type</span>(Key.ENTER)
+    <span class="skw">sleep</span>(<span class="dig">0.2</span>)
+    <span class="skw">type</span>(Key.ENTER)
+
+<span class="kw">def</span> configure_users():
+    <span class="skw">wait</span>(Pattern(<img src="1396823681604.png" />).similar(<span class="dig">0.45</span>), <span class="dig">5</span>)
+    App.focus(vm_name)
+    <span class="skw">type</span>(Key.TAB)
+    <span class="skw">type</span>(Key.ENTER)
+    <span class="skw">wait</span>(<img src="1396823773267.png" />, <span class="dig">10</span>)
+    App.focus(vm_name)
+    <span class="skw">type</span>(password)
+    <span class="skw">type</span>(Key.TAB)
+    <span class="skw">type</span>(password)
+    <span class="skw">type</span>(Key.TAB)
+    <span class="skw">type</span>(Key.ENTER)
+    <span class="kw">try</span>:
+        <span class="cmt"># Only for weak passwords!
+</span>        <span class="skw">wait</span>(<img src="1396877856090.png" />, <span class="dig">1</span>)
+        <span class="skw">type</span>(Key.TAB, KeyModifier.SHIFT)
+        <span class="skw">type</span>(Key.ENTER)
+    <span class="kw">except</span> FindFailed:
+        <span class="kw">pass</span>
+
+<span class="kw">def</span> finish_and_reboot():
+    <span class="skw">wait</span>(Pattern(<img src="1396877975411.png" />).targetOffset(<span class="dig">379</span>,<span class="dig">5</span>), <span class="dig">1800</span>)
+    App.focus(vm_name)
+    <span class="skw">type</span>(Key.TAB)
+    <span class="skw">type</span>(Key.ENTER)
+
+<span class="kw">def</span> first_login():
+    <span class="skw">wait</span>(<img src="1396878148796.png" />, <span class="dig">180</span>)
+    App.focus(vm_name)
+    <span class="skw">type</span>(<span class="str">"root"</span>)
+    <span class="skw">type</span>(Key.ENTER)
+    <span class="skw">sleep</span>(<span class="dig">0.5</span>)
+    <span class="skw">type</span>(password)
+    <span class="skw">type</span>(Key.ENTER)
+    <span class="skw">sleep</span>(<span class="dig">0.5</span>)
+    <span class="skw">type</span>(<span class="str">"dhclient"</span>)
+    <span class="skw">type</span>(Key.ENTER)
+    <span class="skw">type</span>(<span class="str">"systemctl start sshd"</span>)
+    <span class="skw">type</span>(Key.ENTER)
+    <span class="skw">type</span>(<span class="str">"ip addr show"</span>)
+    <span class="skw">type</span>(Key.ENTER)
+
+<span class="cmt">#go_faster()
+</span><span class="cmt">#select_language()
+</span><span class="cmt">#configure_partitioning()
+</span><span class="cmt">#configure_users()
+</span><span class="cmt">#finish_and_reboot()
+</span>first_login()
+</pre>
+</body>
+</html>
